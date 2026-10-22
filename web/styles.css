@@ -1,0 +1,784 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Java Banking & UPI System — Professional Theme
+   Clean light UI with navy blue accents, UPI authentication badges,
+   and authentic digital banking components.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Reset ──────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --navy-950: #0a1628;
+    --navy-900: #0f1f3d;
+    --navy-800: #1a3a5c;
+    --navy-700: #1e4d7b;
+    --navy-600: #2563a0;
+    --navy-100: #dce8f5;
+    --navy-50: #f0f5fb;
+
+    --upi-green: #059669;
+    --upi-green-light: #ecfdf5;
+    --upi-green-border: #a7f3d0;
+
+    --upi-orange: #d97706;
+    --upi-orange-light: #fffbeb;
+
+    --white: #ffffff;
+    --gray-50: #f8f9fa;
+    --gray-100: #f1f3f5;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --gray-400: #ced4da;
+    --gray-500: #adb5bd;
+    --gray-600: #6c757d;
+    --gray-700: #495057;
+    --gray-800: #343a40;
+    --gray-900: #212529;
+
+    --green-600: #16a34a;
+    --green-50: #f0fdf4;
+    --green-border: #bbf7d0;
+
+    --red-600: #dc2626;
+    --red-50: #fef2f2;
+    --red-border: #fecaca;
+
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --radius: 6px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 2px 8px rgba(0,0,0,0.10);
+    --shadow-lg: 0 8px 24px rgba(15,31,61,0.12);
+    --transition: 0.2s ease;
+}
+
+html {
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: var(--font);
+    background: var(--gray-50);
+    color: var(--gray-900);
+    line-height: 1.5;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────── */
+.header {
+    background: var(--navy-900);
+    color: var(--white);
+    border-bottom: 3px solid var(--navy-700);
+}
+
+.header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #2563a0, #1e4d7b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.header-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.header-sub {
+    font-size: 0.75rem;
+    color: var(--navy-100);
+    font-weight: 400;
+}
+
+.header-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: #e2e8f0;
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+}
+
+.badge-pin-hint {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #ffd166;
+}
+
+/* ── Test Accounts Bar ───────────────────────────────────────────────── */
+.test-bar {
+    background: #ffffff;
+    border-bottom: 1px solid var(--gray-300);
+    padding: 10px 24px;
+    box-shadow: var(--shadow-sm);
+}
+
+.test-bar-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.test-bar-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--navy-800);
+    flex-shrink: 0;
+}
+
+.pin-pill {
+    background: var(--navy-50);
+    border: 1px solid var(--navy-100);
+    color: var(--navy-700);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
+
+.test-chips-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    flex-grow: 1;
+    padding-bottom: 2px;
+}
+
+.test-chip {
+    background: var(--gray-100);
+    border: 1px solid var(--gray-300);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.test-chip:hover {
+    background: var(--navy-50);
+    border-color: var(--navy-600);
+    color: var(--navy-800);
+    transform: translateY(-1px);
+}
+
+.chip-name {
+    font-weight: 600;
+    color: var(--gray-800);
+}
+
+.chip-upi {
+    color: var(--navy-600);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+}
+
+.chip-bal {
+    color: var(--upi-green);
+    font-weight: 600;
+}
+
+/* ── Layout ─────────────────────────────────────────────────────────── */
+.layout {
+    max-width: 1280px;
+    margin: 24px auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+/* ── Sidebar Navigation ──────────────────────────────────────────────── */
+.sidebar {
+    background: var(--white);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius);
+    padding: 12px;
+    box-shadow: var(--shadow-sm);
+}
+
+.sidebar-section-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray-500);
+    margin: 14px 12px 6px 12px;
+}
+
+.sidebar-section-label:first-child {
+    margin-top: 4px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sidebar-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--gray-700);
+    cursor: pointer;
+    text-align: left;
+    transition: var(--transition);
+}
+
+.sidebar-btn:hover {
+    background: var(--gray-100);
+    color: var(--gray-900);
+}
+
+.sidebar-btn.active {
+    background: var(--navy-800);
+    color: var(--white);
+    font-weight: 600;
+}
+
+.sidebar-btn.active svg {
+    stroke: var(--white);
+}
+
+/* ── Content Area & Panels ───────────────────────────────────────────── */
+.content {
+    min-width: 0;
+}
+
+.panel {
+    display: none;
+}
+
+.panel.active {
+    display: block;
+}
+
+.panel-header {
+    margin-bottom: 16px;
+}
+
+.panel-header h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--navy-900);
+    letter-spacing: -0.01em;
+}
+
+.panel-header p {
+    font-size: 0.85rem;
+    color: var(--gray-600);
+    margin-top: 3px;
+}
+
+/* ── Cards & Forms ───────────────────────────────────────────────────── */
+.card {
+    background: var(--white);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    .layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--gray-800);
+}
+
+.input-with-button {
+    display: flex;
+    gap: 6px;
+}
+
+.input-with-button input {
+    flex-grow: 1;
+}
+
+.quick-dropdown {
+    width: 130px;
+    background: var(--gray-100);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius);
+    padding: 8px;
+    font-size: 0.78rem;
+    color: var(--navy-800);
+    cursor: pointer;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"] {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--gray-900);
+    background: var(--white);
+    transition: var(--transition);
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--navy-600);
+    box-shadow: 0 0 0 3px rgba(37, 99, 160, 0.15);
+}
+
+/* ── UPI PIN Security Box ────────────────────────────────────────────── */
+.upi-pin-group {
+    background: var(--navy-50);
+    border: 1px solid var(--navy-100);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-top: 4px;
+}
+
+.upi-pin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.upi-pin-header label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--navy-900);
+}
+
+.upi-pin-hint {
+    font-size: 0.75rem;
+    color: var(--navy-700);
+}
+
+.upi-pin-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--white);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius);
+    padding: 4px 12px;
+}
+
+.upi-pin-input-wrap input {
+    border: none;
+    box-shadow: none;
+    padding: 6px 0;
+    font-size: 1.1rem;
+    letter-spacing: 0.25em;
+    font-family: var(--font-mono);
+    font-weight: 700;
+}
+
+.upi-pin-input-wrap input:focus {
+    border: none;
+    box-shadow: none;
+}
+
+.btn-toggle-pin {
+    background: transparent;
+    border: none;
+    color: var(--navy-600);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+.form-actions {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 4px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background: var(--navy-800);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background: var(--navy-900);
+}
+
+.btn-pay {
+    background: #0d5f3a;
+    font-size: 0.95rem;
+    padding: 12px 28px;
+}
+
+.btn-pay:hover {
+    background: #084328;
+}
+
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+}
+
+/* ── Result & Success Cards ─────────────────────────────────────────── */
+.result-card {
+    background: var(--white);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.result-success {
+    border-left: 4px solid var(--green-600);
+}
+
+.result-error {
+    border-left: 4px solid var(--red-600);
+    background: var(--red-50);
+}
+
+/* ── UPI Transfer Success Receipt ────────────────────────────────────── */
+.upi-receipt {
+    background: var(--white);
+    border: 1px solid var(--green-border);
+    border-radius: 8px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+}
+
+.receipt-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--green-50);
+    border: 2px solid var(--green-600);
+    border-radius: 50%;
+    margin: 0 auto 12px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.receipt-amount {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--navy-950);
+    margin: 6px 0;
+}
+
+.receipt-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--green-600);
+}
+
+.receipt-grid {
+    margin: 20px 0 16px 0;
+    background: var(--gray-50);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    font-size: 0.85rem;
+}
+
+.receipt-item label {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.receipt-item value {
+    display: block;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-top: 2px;
+}
+
+/* ── Digital Bank Card (Passbook style) ──────────────────────────────── */
+.bank-passbook-card {
+    background: linear-gradient(135deg, #0f1f3d 0%, #1e4d7b 100%);
+    color: var(--white);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.card-bank-name {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #e2e8f0;
+}
+
+.card-network-badge {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.card-middle {
+    margin-bottom: 20px;
+}
+
+.card-bal-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.06em;
+}
+
+.card-balance-big {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #38bdf8;
+    margin-top: 4px;
+}
+
+.card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 14px;
+}
+
+.card-holder-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.card-upi-id {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    margin-top: 2px;
+}
+
+.card-acc-num {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #f1f5f9;
+}
+
+/* ── Tables ─────────────────────────────────────────────────────────── */
+.table-wrap {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.table th,
+.table td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.table th {
+    background: var(--gray-100);
+    color: var(--gray-700);
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.table tbody tr:hover {
+    background: var(--gray-50);
+}
+
+.badge-tx {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.badge-credit {
+    background: var(--green-50);
+    color: var(--green-600);
+    border: 1px solid var(--green-border);
+}
+
+.badge-debit {
+    background: var(--red-50);
+    color: var(--red-600);
+    border: 1px solid var(--red-border);
+}
+
+.badge-deposit {
+    background: var(--navy-50);
+    color: var(--navy-700);
+    border: 1px solid var(--navy-100);
+}
+
+.badge-withdraw {
+    background: var(--upi-orange-light);
+    color: var(--upi-orange);
+    border: 1px solid #fed7aa;
+}
+
+/* ── Toast ──────────────────────────────────────────────────────────── */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--navy-900);
+    color: var(--white);
+    padding: 12px 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    font-size: 0.85rem;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: 0.25s ease;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast.toast-success {
+    border-left: 4px solid var(--green-600);
+}
+
+.toast.toast-error {
+    border-left: 4px solid var(--red-600);
+}

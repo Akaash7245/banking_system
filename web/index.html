@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Java Banking & UPI System — Send money via UPI, verify with UPI PIN, check balances, and manage accounts.">
+    <title>Java Banking & UPI System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header" id="header">
+    <div class="header-inner">
+        <div class="header-brand">
+            <div class="brand-logo">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="5" width="20" height="14" rx="2"/>
+                    <line x1="2" y1="10" x2="22" y2="10"/>
+                </svg>
+            </div>
+            <div>
+                <h1 class="header-title">Java Banking & UPI System</h1>
+                <p class="header-sub">National Payments & Instant Banking Portal</p>
+            </div>
+        </div>
+        <div class="header-status">
+            <span class="status-indicator"></span>
+            <span>UPI Network Online</span>
+            <span class="badge-pin-hint">PIN: 1234</span>
+        </div>
+    </div>
+</header>
+
+<!-- Test Accounts Banner -->
+<div class="test-bar" id="test-bar">
+    <div class="test-bar-inner">
+        <div class="test-bar-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <strong>Test Accounts</strong>
+            <span class="pin-pill">UPI PIN: <strong>1234</strong></span>
+        </div>
+        <div class="test-chips-container" id="test-chips">
+            <!-- Dynamically populated or loaded chips -->
+            <div class="test-chip-loading">Loading test accounts...</div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Layout -->
+<div class="layout" id="app">
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="nav">
+        <div class="sidebar-section-label">UPI SERVICES</div>
+        <ul class="sidebar-menu">
+            <li>
+                <button class="sidebar-btn active" data-panel="send" id="nav-send">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    Send Money (UPI)
+                </button>
+            </li>
+            <li>
+                <button class="sidebar-btn" data-panel="view" id="nav-view">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    Check Balance (PIN)
+                </button>
+            </li>
+        </ul>
+
+        <div class="sidebar-section-label">BANKING OPERATIONS</div>
+        <ul class="sidebar-menu">
+            <li>
+                <button class="sidebar-btn" data-panel="create" id="nav-create">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="17" y1="11" x2="23" y2="11"/></svg>
+                    Create Account & UPI
+                </button>
+            </li>
+            <li>
+                <button class="sidebar-btn" data-panel="deposit" id="nav-deposit">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+                    Deposit Funds
+                </button>
+            </li>
+            <li>
+                <button class="sidebar-btn" data-panel="withdraw" id="nav-withdraw">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                    Withdraw Funds (PIN)
+                </button>
+            </li>
+            <li>
+                <button class="sidebar-btn" data-panel="history" id="nav-history">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v6"/></svg>
+                    Transaction Ledger
+                </button>
+            </li>
+            <li>
+                <button class="sidebar-btn" data-panel="users" id="nav-users">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Test Accounts Directory
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Content Area -->
+    <main class="content">
+
+        <!-- Toast -->
+        <div class="toast" id="toast"></div>
+
+        <!-- 1. Send Money (UPI) -->
+        <section class="panel active" id="panel-send">
+            <div class="panel-header">
+                <h2>Send Money via UPI</h2>
+                <p>Instantly transfer funds to any bank account or UPI ID authorized by your 4-digit UPI PIN.</p>
+            </div>
+
+            <div class="card">
+                <form id="form-send" class="form" autocomplete="off">
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="send-from">Sender Account / UPI ID</label>
+                            <div class="input-with-button">
+                                <input id="send-from" type="text" placeholder="e.g. rajesh@okaxis or ACC1001" required>
+                                <select id="select-sender" class="quick-dropdown" title="Quick pick sender">
+                                    <option value="">Quick Select...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="send-to">Beneficiary Account / UPI ID</label>
+                            <div class="input-with-button">
+                                <input id="send-to" type="text" placeholder="e.g. priya@okicici or ACC1002" required>
+                                <select id="select-receiver" class="quick-dropdown" title="Quick pick beneficiary">
+                                    <option value="">Quick Select...</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="send-amount">Amount (₹)</label>
+                            <input id="send-amount" type="number" step="0.01" min="0.01" placeholder="e.g. 500.00" required>
+                        </div>
+                        <div class="field">
+                            <label for="send-remarks">Note / Remarks (Optional)</label>
+                            <input id="send-remarks" type="text" placeholder="e.g. Rent, Dinner, Coffee split">
+                        </div>
+                    </div>
+
+                    <!-- UPI PIN Section -->
+                    <div class="upi-pin-group">
+                        <div class="upi-pin-header">
+                            <label for="send-pin">Enter 4-Digit UPI PIN</label>
+                            <span class="upi-pin-hint">Required for payment authorization • Default: <strong>1234</strong></span>
+                        </div>
+                        <div class="upi-pin-input-wrap">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563a0" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <input id="send-pin" type="password" maxlength="6" placeholder="••••" required class="upi-pin-field" autocomplete="new-password">
+                            <button type="button" class="btn-toggle-pin" onclick="togglePinVisibility('send-pin')">Show</button>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-pay" id="btn-send">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                            Pay Securely via UPI
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="result" id="result-send"></div>
+        </section>
+
+        <!-- 2. Check Balance (PIN Protected) -->
+        <section class="panel" id="panel-view">
+            <div class="panel-header">
+                <h2>Check Account Balance & UPI Profile</h2>
+                <p>Enter your Account Number or UPI ID along with your UPI PIN to view your verified account balance.</p>
+            </div>
+
+            <div class="card">
+                <form id="form-view" class="form" autocomplete="off">
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="view-identifier">Account Number or UPI ID</label>
+                            <div class="input-with-button">
+                                <input id="view-identifier" type="text" placeholder="e.g. ACC1001 or rajesh@okaxis" required>
+                                <select id="select-view-user" class="quick-dropdown" title="Select account">
+                                    <option value="">Quick Select...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="view-pin">UPI PIN (4 Digits)</label>
+                            <div class="upi-pin-input-wrap">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563a0" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                <input id="view-pin" type="password" maxlength="6" placeholder="••••" required class="upi-pin-field" value="1234">
+                                <button type="button" class="btn-toggle-pin" onclick="togglePinVisibility('view-pin')">Show</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="btn-view">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            Verify PIN & Check Balance
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="result" id="result-view"></div>
+        </section>
+
+        <!-- 3. Create Account & UPI ID -->
+        <section class="panel" id="panel-create">
+            <div class="panel-header">
+                <h2>Open New Account & Set Up UPI</h2>
+                <p>Register a new bank account with custom initial deposit and set your secure 4-digit UPI PIN.</p>
+            </div>
+            <div class="card">
+                <form id="form-create" class="form" autocomplete="off">
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="create-name">Account Holder Full Name</label>
+                            <input id="create-name" type="text" placeholder="e.g. Ananya Sen" required>
+                        </div>
+                        <div class="field">
+                            <label for="create-deposit">Initial Deposit (₹)</label>
+                            <input id="create-deposit" type="number" step="0.01" min="0.01" placeholder="10000.00" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="create-pin">Set 4-Digit UPI PIN (Default: 1234)</label>
+                            <input id="create-pin" type="password" maxlength="6" placeholder="1234" value="1234" required>
+                        </div>
+                        <div class="field">
+                            <label for="create-upi">Custom UPI ID (Optional)</label>
+                            <input id="create-upi" type="text" placeholder="e.g. ananya@okaxis (auto-generated if empty)">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="btn-create">Create Account & UPI</button>
+                    </div>
+                </form>
+            </div>
+            <div class="result" id="result-create"></div>
+        </section>
+
+        <!-- 4. Deposit Funds -->
+        <section class="panel" id="panel-deposit">
+            <div class="panel-header">
+                <h2>Deposit Funds</h2>
+                <p>Credit funds to any bank account or UPI ID (no PIN needed for incoming credits).</p>
+            </div>
+            <div class="card">
+                <form id="form-deposit" class="form" autocomplete="off">
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="deposit-number">Account Number or UPI ID</label>
+                            <input id="deposit-number" type="text" placeholder="e.g. ACC1001 or rajesh@okaxis" required>
+                        </div>
+                        <div class="field">
+                            <label for="deposit-amount">Deposit Amount (₹)</label>
+                            <input id="deposit-amount" type="number" step="0.01" min="0.01" placeholder="5000.00" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="btn-deposit">Deposit Funds</button>
+                    </div>
+                </form>
+            </div>
+            <div class="result" id="result-deposit"></div>
+        </section>
+
+        <!-- 5. Withdraw Funds (PIN Protected) -->
+        <section class="panel" id="panel-withdraw">
+            <div class="panel-header">
+                <h2>Withdraw Funds (ATM / Cash Out)</h2>
+                <p>Authorize a withdrawal using your secure 4-digit UPI PIN.</p>
+            </div>
+            <div class="card">
+                <form id="form-withdraw" class="form" autocomplete="off">
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="withdraw-number">Account Number or UPI ID</label>
+                            <input id="withdraw-number" type="text" placeholder="e.g. ACC1001" required>
+                        </div>
+                        <div class="field">
+                            <label for="withdraw-amount">Amount (₹)</label>
+                            <input id="withdraw-amount" type="number" step="0.01" min="0.01" placeholder="2000.00" required>
+                        </div>
+                        <div class="field">
+                            <label for="withdraw-pin">UPI PIN</label>
+                            <input id="withdraw-pin" type="password" maxlength="6" placeholder="••••" value="1234" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="btn-withdraw">Authorize & Withdraw</button>
+                    </div>
+                </form>
+            </div>
+            <div class="result" id="result-withdraw"></div>
+        </section>
+
+        <!-- 6. Transaction History -->
+        <section class="panel" id="panel-history">
+            <div class="panel-header">
+                <h2>Transaction History & UPI Statement</h2>
+                <p>View complete audit history of UPI transfers sent, received, deposits, and withdrawals.</p>
+            </div>
+            <div class="card">
+                <form id="form-history" class="form" autocomplete="off">
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="history-number">Account Number or UPI ID</label>
+                            <input id="history-number" type="text" placeholder="e.g. ACC1001 or rajesh@okaxis" required>
+                        </div>
+                        <div class="field">
+                            <label for="history-pin">UPI PIN (Optional / Default: 1234)</label>
+                            <input id="history-pin" type="password" maxlength="6" placeholder="1234" value="1234">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="btn-history">Fetch Statement</button>
+                    </div>
+                </form>
+            </div>
+            <div class="result" id="result-history"></div>
+        </section>
+
+        <!-- 7. All Test Accounts Directory -->
+        <section class="panel" id="panel-users">
+            <div class="panel-header">
+                <h2>Test Accounts & Profiles</h2>
+                <p>All active test users in the system. Use any of these accounts with the default UPI PIN: <strong>1234</strong>.</p>
+            </div>
+            <div class="card">
+                <div class="table-wrap">
+                    <table class="table" id="table-test-users">
+                        <thead>
+                            <tr>
+                                <th>Account #</th>
+                                <th>Holder Name</th>
+                                <th>UPI ID</th>
+                                <th>Default PIN</th>
+                                <th>Available Balance</th>
+                                <th>Quick Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-test-users">
+                            <tr><td colspan="6" style="text-align:center; padding: 20px;">Loading users...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
